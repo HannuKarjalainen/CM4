@@ -1,0 +1,13 @@
+workflows:
+  build:
+    scripts:
+      - name: Set Java 17 for Gradle Daemon
+        script: echo "org.gradle.java.home=/Library/Java/JavaVirtualMachines/<path-to-your-java-17>/Contents/Home" > gradle.properties
+
+      - name: Set execute permissions for gradlew
+        script: chmod +x gradlew
+
+      - name: Build Android release
+        script: ./gradlew assembleRelease
+    artifacts:
+      - app/build/outputs/**/*.apk
