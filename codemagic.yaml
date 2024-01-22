@@ -14,5 +14,7 @@ workflows:
       - name: Build Android release
         script: |
           ./gradlew bundleRelease -PversionCode=$BUILD_NUMBER -PversionName=1.0.$BUILD_NUMBER
+      - name: Set execute permissions for gradlew
+        script: chmod +x ./gradlew
     artifacts:
       - app/build/outputs/**/*.aab
