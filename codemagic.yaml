@@ -1,12 +1,10 @@
 workflows:
-  environment:
-    java: 17
   build:
     scripts:
       - name: Set execute permissions for gradlew
         script: chmod +x gradlew
-
       - name: Build Android release
         script: ./gradlew assembleRelease
     artifacts:
       - app/build/outputs/**/*.apk
+    JAVA_HOME: /usr/lib/jvm/java-1.17.0-openjdk-amd64
