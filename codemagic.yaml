@@ -1,12 +1,23 @@
 workflows:
-  build:
-    scripts:
-      - name: Set execute permissions for gradlew
-        script: chmod +x gradlew
-      - name: Set JAVA_HOME
-        script: |
-          echo "export JAVA_HOME=/usr/lib/jvm/java-1.17.0-openjdk-amd64" >> $GITHUB_ENV
-      - name: Build Android release
-        script: ./gradlew assembleRelease
-    artifacts:
-      - app/build/outputs/**/*.apk
+    react-native-android:
+        name: React Native Android Workflow
+        max_build_duration: 120
+        instance_type: mac_mini_m1
+        environment:
+            java: 17
+            vars:
+                PACKAGE_NAME: "com.example.codemagicsample"
+        scripts:
+        - name: Install npm dependencies
+          script: |
+            npm install
+        - name: Set Android SDK location
+          script: |
+                echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
+        - name: Build Android release
+          script: |
+                cd android
+                ./gradlew assembleRelease
+
+        artifacts:
+        - android/app/build/outputs/**/*.aab
